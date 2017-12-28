@@ -1,13 +1,14 @@
 package mvc.controler;
 
 import common.PersonType;
+import mvc.model.Model;
 import mvc.viewer.GUIViewer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import mvc.model.Model;
+import mvc.model.StandardModel;
 import mvc.viewer.Viewer;
 
 public class GUIControler extends Controler {

@@ -31,7 +31,7 @@ public final class StudentInfoDialog extends BasicPersonInfoDialog {
         Student stu = (Student)s;
         //特别的字段
         textfield_grade.setEditable(false);
-        textfield_grade.setText(String.valueOf(stu.getGrade()));
+        textfield_grade.setText(String.valueOf(stu.getGrades()));
         //显示
         show(false);
         restore();
@@ -47,7 +47,7 @@ public final class StudentInfoDialog extends BasicPersonInfoDialog {
         assert(old instanceof Student);
         super.justModify(old);
         Student s= (Student)old;
-        textfield_grade.setText(String.valueOf(s.getGrade()));
+        textfield_grade.setText(String.valueOf(s.getGrades()));
         show(false);
     }
     @Override

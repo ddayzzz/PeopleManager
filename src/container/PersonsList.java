@@ -3,7 +3,7 @@ import java.util.*;
 import java.io.*;
 import java.util.function.BiFunction;
 
-public class PersonsList implements IContainer, Serializable, Iterable {
+public class PersonsList implements IContainer, Serializable, Iterable<Person> {
 	private ArrayList<Person> persons;//类型安全的版本
 	public PersonsList(){
 		persons = new ArrayList<Person>();
@@ -17,12 +17,6 @@ public class PersonsList implements IContainer, Serializable, Iterable {
 			throw new PersonExistsException("插入失败，已经存在的目标：" + p.toString());
 		}
 
-	}
-	public void list(){
-		for(Person p : persons)
-		{
-			System.out.println(p.toString());
-		}
 	}
 	public ArrayList<Person> query(Person p, BiFunction<Person, Person, Boolean> pred){
 		assert(p != null);
@@ -64,7 +58,7 @@ public class PersonsList implements IContainer, Serializable, Iterable {
 		}
 	}
 	public Iterator iterator(){
-		return ((Iterable)persons).iterator();
+		return persons.iterator();
 	}
 	
 }

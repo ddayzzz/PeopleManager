@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.*;
+import java.util.Collection;
 import javax.swing.*;
 
 import common.PersonType;
@@ -11,21 +11,17 @@ import container.IContainer;
 import container.Person;
 import mvc.StudentInfoDialog;
 import mvc.WorkerInfoDialog;
-import mvc.controler.Controler;
-import mvc.model.Model;
 import mvc.BasicPersonInfoDialog;
 public class GUIViewer implements Viewer{
 
     private JLabel label_list;
     private JButton button_list, button_insert, button_query, button_delete, button_modify;
-    private java.awt.List list_listResult;
+    private JList<Person> list_listResult;
+    private DefaultListModel  listModel_list;
     private BasicPersonInfoDialog basicInfo_dialog;
     private JFrame jframe;
     private JDialog dialog;
-    private HashMap<String, Person> strToPerson = new HashMap<String, Person>();
-
     public GUIViewer(PersonType viewType){
-
         switch (viewType)
         {
             case Worker:
@@ -40,7 +36,12 @@ public class GUIViewer implements Viewer{
                 break;
         }
         label_list = new JLabel("当前的对象：（0）");
-        list_listResult = new java.awt.List();
+        list_listResult = new JList<Person>();
+        //设置list的样式
+        listModel_list = new DefaultListModel();
+        list_listResult.setModel(listModel_list);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(list_listResult);
         //btn_actions = new ActionListener(target_model, this);
         button_delete = new JButton("删除");
         button_insert = new JButton("插入");
@@ -65,7 +66,7 @@ public class GUIViewer implements Viewer{
         dialog.setLayout(layout_border);
         dialog.add("North", label_list);
         dialog.add("South", panel_buttons);
-        dialog.add("Center", list_listResult);
+        dialog.add("Center", scrollPane);
         dialog.setSize(500,200);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
@@ -105,12 +106,10 @@ public class GUIViewer implements Viewer{
 
     @Override
     public void showAllPersons(IContainer c) {
-        list_listResult.removeAll();
-        for(Object obj : c)
+        listModel_list.removeAllElements();
+        for(Person obj : c)
         {
-            Person person = (Person)obj;
-            strToPerson.put(person.toString(), person);
-            list_listResult.add(person.toString());
+            listModel_list.addElement(obj);
         }
     }
 
@@ -127,11 +126,10 @@ public class GUIViewer implements Viewer{
 
     @Override
     public Person getSelectedPerson() {
-        String personStr = list_listResult.getSelectedItem();
-        if(personStr !=null)
-            return strToPerson.get(personStr);
-        else
+        Object selected = list_listResult.getSelectedValue();
+        if(selected == null)
             return null;
+        return (Person)selected;
     }
 
     @Override
@@ -143,15 +141,12 @@ public class GUIViewer implements Viewer{
     public void setSelectedPerson(Person person) {
         if(person !=null)
         {
-            String[] items = list_listResult.getItems();
-            for(int i=0;i<items.length;++i)
-            {
-                if(items[i].equals(person.toString()))
+            for(int i=0;i<listModel_list.getSize();++i)
+                if(listModel_list.get(i).equals(person))
                 {
-                    list_listResult.select(i);
+                    list_listResult.setSelectedIndex(i);
                     break;
                 }
-            }
         }
     }
 
@@ -207,15 +202,21 @@ public class GUIViewer implements Viewer{
     }
 
     @Override
-    public String showQueryPersonsResultAndGetSelectResult(String title, String text, String[] res) {
+    public int showQueryPersonsResultAndGetSelectResult(String title, String text, Collection res) {
         //assert(res.length > 0);
-        if(res !=null && res.length > 0)
-        {
-            String s = (String)JOptionPane.showInputDialog(null,text, title, JOptionPane.PLAIN_MESSAGE, null, res, res[0]);
-            return s;
+        if (res != null && res.size() > 0) {
+            //有一个就可以
+            Object[] objects = res.toArray();
+            Object s = JOptionPane.showInputDialog(null, text, title, JOptionPane.PLAIN_MESSAGE, null, objects, objects[0]);
+            if (s == null)
+                return -1;
+            for (int i = 0; i < objects.length; ++i) {
+                if (s.equals(objects[i])) {
+                    return i;
+                }
+            }
         }
-        else
-            return  null;
+        return -1;
     }
     @Override
     public void addActionListenerToButtons(ActionListener actionListener)

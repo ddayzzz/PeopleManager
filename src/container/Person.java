@@ -55,7 +55,7 @@ public class Person implements Serializable{
 	}
 	@Override
 	public String toString(){
-		return String.format("ID=%s, Name=%s, Age=%d",
+		return String.format("ID=%s, 姓名=%s, 年龄=%d",
 				this.id, this.name, this.age);
 	}
 	//工厂函数，从文件变成一个Person对象
@@ -66,8 +66,8 @@ public class Person implements Serializable{
 			{
 				//只有三个字段
 				String id = data[0].substring(3);//ID=
-				String name = data[1].substring(5);//Name=
-				int age = Integer.valueOf(data[2].substring(4));//Age=
+				String name = data[1].substring(3);//Name=
+				int age = Integer.valueOf(data[2].substring(3));//Age=
 				return new Person(id, name, age);
 			}
 		}catch (Exception e)

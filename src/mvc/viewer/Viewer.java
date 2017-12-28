@@ -2,12 +2,12 @@ package mvc.viewer;
 
 import container.IContainer;
 import container.Person;
-import mvc.controler.Controler;
-import mvc.model.Model;
 
 import java.awt.event.ActionListener;
+import java.util.Collection;
 
 public interface Viewer {
+
     void showCriticalMessage(String msg);
     void showInfoMessage(String msg);
     String getUserInput(String title, String text);
@@ -19,7 +19,7 @@ public interface Viewer {
     void setSelectedPerson(Person person);
     boolean askUserYesOrNo(String text);
     boolean askToRefreshList();
-    String showQueryPersonsResultAndGetSelectResult(String title, String text, String[] res);
+    int showQueryPersonsResultAndGetSelectResult(String title, String text, Collection items);
     int askManyOptions(String title, String text, String[] optionsText);
     void addActionListenerToButtons(ActionListener actionListener);
     boolean needAddBuutonActionListener();

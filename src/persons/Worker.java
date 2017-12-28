@@ -15,7 +15,7 @@ public class Worker extends Person {
     public void setJob(String job){ this.job = job;}
     @Override
     public String toString(){
-        return String.format("ID=%s, Name=%s, Age=%d, Job=%s, Salary=%f",
+        return String.format("ID=%s, 姓名=%s, 年龄=%d, 工作=%s, 薪水=%.2f",
                 this.getId(), this.getName(), this.getAge(), job, salary);
     }
     @Override
@@ -38,10 +38,10 @@ public class Worker extends Person {
             {
                 //只有三个字段
                 String id = data[0].substring(3);//ID=
-                String name = data[1].substring(5);//Name=
-                int age = Integer.valueOf(data[2].substring(4));//Age=
-                String job = data[3].substring(4);//Job=
-                float salary = Float.valueOf(data[4].substring(7));//Salary=
+                String name = data[1].substring(3);//Name=
+                int age = Integer.valueOf(data[2].substring(3));//Age=
+                String job = data[3].substring(3);//Job=
+                float salary = Float.valueOf(data[4].substring(3));//Salary=
                 return new Worker(id, name, age, job,salary);
             }
         }catch (Exception e)

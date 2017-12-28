@@ -8,7 +8,7 @@ import persons.Worker;
 
 import java.io.*;
 
-public class TextModel extends Model{
+public class TextModel extends StandardModel {
     String filepath;
     public TextModel(String filepath, PersonType personType)
     {

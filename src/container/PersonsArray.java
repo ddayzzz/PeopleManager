@@ -2,7 +2,7 @@ package container;
 import java.io.Serializable;
 import java.util.function.BiFunction;
 import java.util.*;
-public class PersonsArray implements IContainer, Serializable, Iterable {
+public class PersonsArray implements IContainer, Serializable, Iterable<Person> {
     private Person[] persons = new Person[10];
     private int next=0;
     private boolean isFull() {
@@ -19,10 +19,7 @@ public class PersonsArray implements IContainer, Serializable, Iterable {
         else
             throw new PersonExistsException("插入失败，已经存在的目标：" + p.toString());
     }
-    public void list(){
-        for(int i=0;i<next;++i)
-            System.out.println(persons[i]);
-    }
+
     public ArrayList<Person> query(Person p, BiFunction<Person, Person, Boolean> pred){
         ArrayList<Person> results = new ArrayList<>();
         for(int i=0;i<next;++i)
@@ -64,7 +61,7 @@ public class PersonsArray implements IContainer, Serializable, Iterable {
         return next;
     }
 
-    public class ArrayIterator implements Iterator{
+    public class ArrayIterator implements Iterator<Person>{
         private int ret = 0;
         private Person[] persons;
         private int length;

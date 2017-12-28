@@ -13,6 +13,7 @@ public class ExceptionUtility {
     */
     public static final String getStackTrace(Throwable e)
     {
+
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
         e.printStackTrace(printWriter);

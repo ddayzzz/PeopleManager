@@ -4,7 +4,7 @@ import container.IContainer;
 
 import java.io.*;
 
-public class SerializableModel extends Model {
+public class SerializableModel extends StandardModel {
     private String targetFile;
     public SerializableModel(String targetFile)
     {

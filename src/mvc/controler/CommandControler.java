@@ -2,6 +2,7 @@ package mvc.controler;
 
 import common.PersonType;
 import mvc.model.Model;
+import mvc.model.StandardModel;
 import mvc.viewer.CommandViewer;
 
 import java.util.Scanner;

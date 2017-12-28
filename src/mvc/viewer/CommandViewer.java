@@ -1,7 +1,5 @@
 package mvc.viewer;
 import common.PersonType;
-import mvc.controler.Controler;
-import mvc.model.Model;
 import container.IContainer;
 import container.Person;
 import persons.Student;
@@ -93,7 +91,7 @@ public class CommandViewer implements Viewer {
 
 	@Override
 	public void showAllPersons(IContainer c) {
-		for(Object person : c)
+		for(Person person : c)
 		{
 			System.out.println(person);
 		}
@@ -141,19 +139,24 @@ public class CommandViewer implements Viewer {
 	}
 
 	@Override
-	public String showQueryPersonsResultAndGetSelectResult(String title, String text, String[] res) {
-		if(res == null || res.length == 0)
-			return null;
-		showInfoMessage(title + ":");
-		showInfoMessage(text + "（请输入编号）");
-		for(int i=0;i<res.length;++i)
-			showInfoMessage("\t" + i + "." + res[i]);
+	public int showQueryPersonsResultAndGetSelectResult(String title, String text, Collection res) {
+		if(res ==null || res.size() <= 0){
+			return -1;
+		}
+		System.out.println(title + ":");
+		System.out.println(text + "（请输入编号）:");
+		//输出各种结果
+		Object[] o = res.toArray();
+		for(int i=0;i<o.length;++i){
+			System.out.println("\t" + i + "." + o[i]);
+		}
 		Scanner scanner = new Scanner(System.in);
 		int code = scanner.nextInt();
-		if(code >= 0 && code < res.length)
-			return res[code];
+		if(code >= 0 && code < o.length)
+			return code;
 		else
-			return null;//非法的数字
+			return -1;//非法的数字
+
 	}
 
 	@Override

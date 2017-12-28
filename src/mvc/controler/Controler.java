@@ -1,9 +1,8 @@
 package mvc.controler;
 
 import common.PersonType;
-import container.Person;
 import mvc.model.Model;
-import mvc.viewer.Viewer;
+import mvc.model.StandardModel;
 
 import java.util.HashMap;
 
